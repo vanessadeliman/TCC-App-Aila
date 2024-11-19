@@ -62,7 +62,7 @@ class Analise {
       'nao_corados': naoCorados,
       'total_celulas': totalCelulas,
       'imagens': imagem.toString(),
-      'favorito': favorito,
+      'favorito': favorito ? 1 : 0,
       'precisao': precisao,
       'observasoes': observasoes,
     };
@@ -85,7 +85,7 @@ class Analise {
       naoCorados: map['nao_corados'] ?? 0,
       totalCelulas: map['total_celulas'] ?? 0,
       imagem: imagens,
-      favorito: map['favorito'] ?? false,
+      favorito: map['favorito'] == 1,
       precisao: map['precisao'] ?? 0,
       observasoes: map['observasoes'] ?? '',
     );

@@ -1,16 +1,22 @@
 import 'package:aila/db/conexao_db.dart';
+import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/home.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DatabaseConexao().database;
+  final List<Map<String, dynamic>> resultados =
+      await DatabaseConexao().getAnalises();
 
-  runApp(const MyApp());
+  final List<Analise> analises =
+      List.from(resultados.map((element) => Analise.fromMap(element)));
+
+  runApp(MyApp(analises));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final List<Analise> analises;
+  const MyApp(this.analises, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Home(),
+      home: Home(analises),
     );
   }
 }

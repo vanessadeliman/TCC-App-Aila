@@ -1,7 +1,10 @@
+import 'package:aila/db/conexao_db.dart';
+import 'package:aila/db/modelos/analise.dart';
 import 'package:flutter/material.dart';
 
 class InformacoesDaAnalise extends StatelessWidget {
-  const InformacoesDaAnalise({super.key});
+  final Analise analise;
+  const InformacoesDaAnalise(this.analise, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,10 @@ class InformacoesDaAnalise extends StatelessWidget {
                                       },
                                       child: const Text('Voltar')),
                                   FilledButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        DatabaseConexao()
+                                            .deleteAnalise(analise);
+                                      },
                                       child: const Text('Confirmar'))
                                 ],
                               );
