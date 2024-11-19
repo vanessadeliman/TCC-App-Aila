@@ -113,7 +113,7 @@ class Home extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => NovaAnalise(),
+              builder: (BuildContext context) => const NovaAnalise(),
             ),
           );
         },

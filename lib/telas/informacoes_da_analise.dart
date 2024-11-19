@@ -43,17 +43,13 @@ class InformacoesDaAnalise extends StatelessWidget {
                   ],
                 ),
                 const Text('21:00Pm - 23:30Pm'),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Text(
                   'Informações da amostra',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Text('Foram identificadas 5 células:'),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 const Text('5 Corados'),
                 const Text('0 Não corados'),
                 Container(
@@ -65,7 +61,7 @@ class InformacoesDaAnalise extends StatelessWidget {
                             builder: (context) {
                               return AlertDialog(
                                 title: const Text("Atenção"),
-                                content: Text(
+                                content: const Text(
                                     "Tem certeza que deseja excluir a análise \$? Essa ação não pode ser desfeita."),
                                 actions: [
                                   TextButton(

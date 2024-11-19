@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/camera.dart';
+import 'package:aila/telas/imagem_preview.dart';
 import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -33,17 +34,14 @@ class _NovaAnaliseState extends State<NovaAnalise> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Nova análise'),
+      ),
       body: Form(
         key: chave,
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            Text(
-              'Nova análise',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            const SizedBox(height: 20),
             Text(
               'Informações da análise',
               style: Theme.of(context).textTheme.titleMedium,
@@ -139,16 +137,68 @@ class _NovaAnaliseState extends State<NovaAnalise> {
               ],
             ),
             const SizedBox(height: 20),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: imagens.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return Image.file(File(imagens[index]));
-              },
-            )
+            imagens.isEmpty
+                ? Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Theme.of(context).highlightColor,
+                    ),
+                    height: 200,
+                    child: const Center(
+                      child: Text('Nenhuma imagem adicionada'),
+                    ),
+                  )
+                : GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: imagens.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisSpacing: 10, crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: SizedBox(
+                              height: 100,
+                              width: 100,
+                              child: Stack(children: [
+                                Positioned.fill(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ImagePreviewPage(
+                                            imagePath: imagens[index],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Image.file(
+                                      File(imagens[index]),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 5,
+                                  right: 5,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        imagens.removeAt(index);
+                                      });
+                                    },
+                                    icon: const Icon(
+                                      Icons.remove_circle,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              ])));
+                    },
+                  )
           ],
         ),
       ),
