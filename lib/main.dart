@@ -1,7 +1,11 @@
+import 'package:aila/db/conexao_db.dart';
 import 'package:aila/telas/home.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DatabaseConexao().database;
+
   runApp(const MyApp());
 }
 
