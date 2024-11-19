@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/camera.dart';
+import 'package:aila/telas/ia/objeto_identificador.dart';
 import 'package:aila/telas/imagem_preview.dart';
 import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
@@ -19,10 +21,12 @@ class NovaAnalise extends StatefulWidget {
 class _NovaAnaliseState extends State<NovaAnalise> {
   final TextEditingController nome = TextEditingController();
   final TextEditingController observacao = TextEditingController();
-  late final Interpreter interprete;
+  ObjectDetection? objectDetection;
+
   bool _processando = false;
 
   List<String> imagens = [];
+  Uint8List? image;
 
   GlobalKey<FormState> chave = GlobalKey<FormState>();
 
@@ -31,6 +35,26 @@ class _NovaAnaliseState extends State<NovaAnalise> {
       return 'Campo obrigatório';
     }
     return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    objectDetection = ObjectDetection();
+  }
+
+  Future<void> runModel(String path) async {
+    image = objectDetection!.analyseImage(path);
+    Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ImagePreviewPage(
+                                                  image: image,
+                                                ),
+                                              ),
+                                            );
+
   }
 
   @override
@@ -227,7 +251,7 @@ class _NovaAnaliseState extends State<NovaAnalise> {
 
                   try {
                     for (var index in imagens) {
-                      await runModel(File(index));
+                      await runModel(index);
                     }
                     await DatabaseConexao().insertAnalise(analise);
                     setState(() {
