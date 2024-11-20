@@ -71,10 +71,15 @@ class Analise {
   factory Analise.fromMap(Map<String, dynamic> map) {
     List<String> imagens = [];
     if (map['imagens'] != null && map['imagens'] != '') {
-      // Divide a string de imagens usando vírgulas
-      imagens = map['imagens'].split(',');
-    }
+      String img = map['imagens'];
 
+      // Divide a string de imagens usando vírgulas
+      imagens = img
+          .substring(1, img.length - 1) // Remove os colchetes
+          .split(',') // Divide a string pela vírgula
+          .map((item) => item.trim()) // Remove espaços extras
+          .toList();
+    }
     return Analise(
       id: map['id'] ?? 0,
       nome: map['nome'] ?? '',

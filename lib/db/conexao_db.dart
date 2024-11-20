@@ -32,11 +32,11 @@ class DatabaseConexao {
       CREATE TABLE IF NOT EXISTS analises (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT,
-        DateTime TEXT,
+        data TEXT,
         corados INTEGER,
-        naoCorados INTEGER,
-        totalCelulas INTEGER,
-        imagem TEXT,
+        nao_corados INTEGER,
+        total_celulas INTEGER,
+        imagens TEXT,
         favorito INTEGER,
         precisao REAL,
         observasoes TEXT
@@ -47,6 +47,10 @@ class DatabaseConexao {
   Future<int> insertAnalise(Analise analise) async {
     final db = await database;
     return await db.insert('analises', analise.toMap());
+  }
+  Future<int> updateAnalise(Analise analise) async {
+    final db = await database;
+    return await db.update('analises', analise.toMap(), where: 'id = ?', whereArgs: [analise.id]);
   }
 
   Future<List<Map<String, dynamic>>> getAnalises() async {
