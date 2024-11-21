@@ -111,6 +111,7 @@ class _NovaAnaliseState extends State<NovaAnalise> {
     // Exibir os resultados de contagem
     log('Labels corado detectados: $coradoCount');
     log('Labels não-corado detectados: $naoCoradoCount');
+    log('Total de Labels detectados: ${analise.corados + analise.naoCorados}');
     analise.corados += coradoCount;
     analise.naoCorados += naoCoradoCount;
     analise.totalCelulas = analise.corados + analise.naoCorados;
@@ -159,7 +160,8 @@ class _NovaAnaliseState extends State<NovaAnalise> {
   }
 
   Future<String> saveImage() async {
-    final path = '${getApplicationDocumentsDirectory()}/${nome.text}.jpg';
+    final Directory pathDiretorio = await getApplicationDocumentsDirectory();
+    final path = '${pathDiretorio.path}/${nome.text}.jpg';
 
     // Criar um arquivo no caminho especificado
     final file = File(path);
