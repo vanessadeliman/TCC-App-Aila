@@ -7,9 +7,8 @@ import 'package:aila/telas/componentes/botao_camera_galeria.dart';
 import 'package:aila/telas/componentes/grid_imagens.dart';
 import 'package:aila/telas/informacoes_da_analise.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
-
 import 'package:image/image.dart' as img;
 
 class NovaAnalise extends StatefulWidget {
@@ -28,7 +27,6 @@ class _NovaAnaliseState extends State<NovaAnalise> {
   List<String> imagens = [];
   Uint8List? image;
 
-  final newFolderPath = '/storage/emulated/0/Download';
   Analise analise = Analise(data: DateTime.now());
 
   GlobalKey<FormState> chave = GlobalKey<FormState>();
@@ -36,7 +34,6 @@ class _NovaAnaliseState extends State<NovaAnalise> {
   @override
   void initState() {
     _loadModel();
-    requestStoragePermission();
     super.initState();
   }
 
@@ -161,25 +158,8 @@ class _NovaAnaliseState extends State<NovaAnalise> {
     return pathImagem;
   }
 
-  Future<void> requestStoragePermission() async {
-    // Solicitar permissão para acessar o armazenamento
-    PermissionStatus status = await Permission.storage.request();
-    if (await Permission.manageExternalStorage.isGranted) {
-      log("Permissão concedida.");
-      // Chame a função para acessar o armazenamento
-    } else if (status.isDenied) {
-      log("Permissão negada.");
-      // Solicitar a permissão novamente
-      requestStoragePermission();
-    } else if (status.isPermanentlyDenied) {
-      log("Permissão permanentemente negada.");
-      // Solicitar para o usuário permitir manualmente nas configurações
-      openAppSettings();
-    }
-  }
-
   Future<String> saveImage() async {
-    final path = '$newFolderPath/${nome.text}.jpg';
+    final path = '${getApplicationDocumentsDirectory()}/${nome.text}.jpg';
 
     // Criar um arquivo no caminho especificado
     final file = File(path);
@@ -189,13 +169,6 @@ class _NovaAnaliseState extends State<NovaAnalise> {
 
     log("Imagem salva em: $path");
     return path;
-  }
-
-  String? validator(String? text) {
-    if (nome.text.isEmpty) {
-      return 'Campo obrigatório';
-    }
-    return null;
   }
 
   @override
@@ -220,7 +193,12 @@ class _NovaAnaliseState extends State<NovaAnalise> {
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: nome,
-                    validator: validator,
+                    validator: (String? text) {
+                      if (nome.text.isEmpty) {
+                        return 'Campo obrigatório';
+                      }
+                      return null;
+                    },
                     decoration: const InputDecoration(
                         hintText: 'Digite o nome da análise',
                         labelText: 'Nome'),
