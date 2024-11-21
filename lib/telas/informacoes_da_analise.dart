@@ -1,24 +1,21 @@
 import 'dart:io';
 
-import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
+import 'package:aila/telas/componentes/botao_compartilhar.dart';
+import 'package:aila/telas/componentes/botao_favorito.dart';
+import 'package:aila/telas/componentes/dialog_excluir_analise.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class InformacoesDaAnalise extends StatefulWidget {
+class InformacoesDaAnalise extends StatelessWidget {
   final void Function() atualiza;
   final Analise analise;
   const InformacoesDaAnalise(this.analise, this.atualiza, {super.key});
 
   @override
-  State<InformacoesDaAnalise> createState() => _InformacoesDaAnaliseState();
-}
-
-class _InformacoesDaAnaliseState extends State<InformacoesDaAnalise> {
-  @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvokedWithResult: (didPop, result) => widget.atualiza(),
+      onPopInvokedWithResult: (didPop, result) => atualiza(),
       child: Scaffold(
           body: CustomScrollView(
         slivers: <Widget>[
@@ -31,22 +28,14 @@ class _InformacoesDaAnaliseState extends State<InformacoesDaAnalise> {
               centerTitle: true,
               background: Image.file(
                 width: MediaQuery.of(context).size.width,
-                File(widget.analise.imagem.first),
+                File(analise.imagem.first),
                 fit: BoxFit.cover,
               ),
             ),
-            title: Text(widget.analise.nome),
+            title: Text(analise.nome),
             actions: [
-              IconButton(
-                  onPressed: () async {
-                    widget.analise.favorito = !widget.analise.favorito;
-                    await DatabaseConexao().updateAnalise(widget.analise);
-                    setState(() {});
-                  },
-                  icon: Icon(widget.analise.favorito
-                      ? Icons.favorite
-                      : Icons.favorite_border)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.share))
+              BotaoFavorito(analise),
+              BotaoCompartilhar(analise)
             ],
           ),
           SliverToBoxAdapter(
@@ -59,7 +48,7 @@ class _InformacoesDaAnaliseState extends State<InformacoesDaAnalise> {
                     children: [
                       const Icon(Icons.calendar_month),
                       Text(
-                        DateFormat.yMMMd().format(widget.analise.data),
+                        DateFormat.yMMMd().format(analise.data),
                         style: Theme.of(context).textTheme.titleSmall,
                       )
                     ],
@@ -68,13 +57,12 @@ class _InformacoesDaAnaliseState extends State<InformacoesDaAnalise> {
                     'Informações da amostra',
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  Text('Precisão: ${widget.analise.precisao}'),
+                  Text('Precisão: ${analise.precisao}'),
                   const SizedBox(height: 10),
-                  Text(
-                      'Foram identificadas ${widget.analise.totalCelulas} células:'),
+                  Text('Foram identificadas ${analise.totalCelulas} células:'),
                   const SizedBox(height: 10),
-                  Text('${widget.analise.corados} Corados'),
-                  Text('${widget.analise.naoCorados} Não corados'),
+                  Text('${analise.corados} Corados'),
+                  Text('${analise.naoCorados} Não corados'),
                   Container(
                     alignment: Alignment.bottomRight,
                     child: TextButton(
@@ -82,29 +70,9 @@ class _InformacoesDaAnaliseState extends State<InformacoesDaAnalise> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return AlertDialog(
-                                  title: const Text("Atenção"),
-                                  content: Text(
-                                      "Tem certeza que deseja excluir a análise ${widget.analise.nome}? Essa ação não pode ser desfeita."),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('Voltar')),
-                                    FilledButton(
-                                        onPressed: () {
-                                          DatabaseConexao()
-                                              .deleteAnalise(widget.analise)
-                                              .whenComplete(() {
-                                            Navigator.pop(context);
-                                          });
-                                        },
-                                        child: const Text('Confirmar'))
-                                  ],
-                                );
+                                return DialogExcluirAnalise(analise);
                               }).whenComplete(() {
-                            widget.atualiza();
+                            atualiza();
                             Navigator.pop(context);
                           });
                         },
