@@ -13,11 +13,11 @@ class ImagePreviewPage extends StatelessWidget {
         title: const Text('Visualização'),
       ),
       body: Center(
-              child: Image.file(
-                File(imagePath ?? ''),
-                fit: BoxFit.contain,
-              ),
-            ),
+        child: Image.file(
+          File(imagePath ?? ''),
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }

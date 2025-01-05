@@ -1,13 +1,11 @@
 import 'dart:io';
-
 import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
-import 'package:aila/telas/telas_internas/informacoes_da_analise.dart';
+import 'package:aila/telas/componentes/card_analise.dart';
 import 'package:aila/telas/inicializacao/bloc/login_bloc.dart';
 import 'package:aila/telas/telas_internas/nova_analise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -70,76 +68,7 @@ class _HomeState extends State<Home> {
                     height: MediaQuery.of(context).size.height * .80,
                     child: const Center(child: Text('Ainda não há análises.')));
               }
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>
-                          InformacoesDaAnalise(analises[index], refresh),
-                    ),
-                  );
-                },
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: SizedBox(
-                        height: 200,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            SizedBox(
-                              height: 200,
-                              child: Image.file(
-                                File(analises[index].imagem.first),
-                                height: 200,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const SizedBox(child: Icon(Icons.image)),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              height: 110,
-                              color: Colors.grey[300],
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(DateFormat.yMMMd()
-                                      .format(analises[index].data)),
-                                  Text(analises[index].nome),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                          onPressed: () async {
-                                            analises[index].favorito =
-                                                !analises[index].favorito;
-                                            await DatabaseConexao()
-                                                .updateAnalise(analises[index]);
-                                            setState(() {});
-                                          },
-                                          icon: Icon(analises[index].favorito
-                                              ? Icons.favorite
-                                              : Icons.favorite_border)),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(Icons.share))
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10)
-                  ],
-                ),
-              );
+              return CardAnalise(analises[index], refresh);
             },
           )),
       floatingActionButton: FloatingActionButton(
