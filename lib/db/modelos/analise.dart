@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:aila/db/modelos/caixa.dart';
+
 class Analise {
   int id;
   String nome;
@@ -12,6 +14,7 @@ class Analise {
   bool favorito;
   num precisao;
   String observasoes;
+  List<List<Celulas>> celulas;
   Analise({
     this.id = 0,
     this.nome = '',
@@ -23,6 +26,7 @@ class Analise {
     this.favorito = false,
     this.precisao = 0,
     this.observasoes = '',
+    this.celulas = const <List<Celulas>>[]
   }) {
     this.data = data ?? DateTime.now();
     this.imagem = imagem ?? [];

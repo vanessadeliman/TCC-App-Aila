@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
-import 'package:aila/telas/informacoes_da_analise.dart';
-import 'package:aila/telas/nova_analise.dart';
+import 'package:aila/telas/telas_internas/informacoes_da_analise.dart';
+import 'package:aila/telas/inicializacao/bloc/login_bloc.dart';
+import 'package:aila/telas/telas_internas/nova_analise.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   final List<Analise> analises;
@@ -44,7 +47,16 @@ class _HomeState extends State<Home> {
                   setState(() {});
                 }
               },
-              icon: const Icon(Icons.calendar_month))
+              icon: const Icon(Icons.calendar_month)),
+          IconButton(
+              onPressed: () async {
+                context.read<LoginBloc>().sessaoAtiva.token = '';
+                SharedPreferences cache = await SharedPreferences.getInstance();
+                await cache.setString('sessaoAtiva',
+                    context.read<LoginBloc>().sessaoAtiva.toJson());
+                exit(0);
+              },
+              icon: const Icon(Icons.logout))
         ],
       ),
       body: RefreshIndicator(
@@ -54,9 +66,9 @@ class _HomeState extends State<Home> {
             itemCount: analises.isEmpty ? 1 : analises.length,
             itemBuilder: (context, index) {
               if (analises.isEmpty) {
-                return const Center(
-                  child: Text('Ainda não há análises.'),
-                );
+                return SizedBox(
+                    height: MediaQuery.of(context).size.height * .80,
+                    child: const Center(child: Text('Ainda não há análises.')));
               }
               return InkWell(
                 onTap: () {
