@@ -1,4 +1,5 @@
 import 'package:aila/db/modelos/analise.dart';
+import 'package:aila/utils/ext_widget.dart';
 import 'package:flutter/material.dart';
 
 class BotaoCompartilhar extends StatelessWidget {
@@ -7,6 +8,10 @@ class BotaoCompartilhar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: () {}, icon: const Icon(Icons.share));
+    return IconButton(
+        onPressed: () {
+          gerarCSV(analise.nome, analise.coletas);
+        },
+        icon: const Icon(Icons.share));
   }
 }

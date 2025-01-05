@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:aila/telas/telas_internas/imagem_preview.dart';
+import 'package:aila/telas/telas_internas/analise/imagem_preview.dart';
 import 'package:flutter/material.dart';
 
 class GradeImagens extends StatefulWidget {

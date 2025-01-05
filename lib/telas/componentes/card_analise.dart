@@ -4,7 +4,7 @@ import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/componentes/botao_compartilhar.dart';
 import 'package:aila/telas/componentes/botao_favorito.dart';
 import 'package:aila/telas/componentes/dialog_excluir_analise.dart';
-import 'package:aila/telas/telas_internas/informacoes_da_analise.dart';
+import 'package:aila/telas/telas_internas/analise/informacoes_da_analise.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -58,14 +58,16 @@ class CardAnalise extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 200,
-                    child: Image.file(
-                      File(analise.imagem.first),
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const SizedBox(child: Icon(Icons.image)),
-                    ),
+                    child: analise.coletas.isNotEmpty
+                        ? Image.file(
+                            File(analise.coletas.first.path),
+                            height: 200,
+                            width: MediaQuery.of(context).size.width,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const SizedBox(child: Icon(Icons.image)),
+                          )
+                        : Image.asset('asssets/vazio.png'),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),

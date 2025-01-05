@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:aila/telas/telas_internas/camera.dart';
+import 'package:aila/telas/telas_internas/analise/camera.dart';
 import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
