@@ -31,7 +31,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       };
 
       final response = await cliente.get(
-        Uri.parse('https://tcc-servidor-aila.onrender.com/login'),
+        Uri.parse('http://192.168.1.9:3000/login'),
         headers: headers,
       );
 

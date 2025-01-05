@@ -3,7 +3,7 @@ import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/componentes/card_analise.dart';
 import 'package:aila/telas/inicializacao/bloc/login_bloc.dart';
-import 'package:aila/telas/telas_internas/nova_analise.dart';
+import 'package:aila/telas/telas_internas/analise/nova_analise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -86,10 +86,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> refresh() async {
-    final List<Map<String, dynamic>> resultados =
-        await DatabaseConexao().getAnalises();
-
-    analises = List.from(resultados.map((element) => Analise.fromMap(element)));
+    analises =  await DatabaseConexao().getBanco();
     setState(() {});
   }
 }

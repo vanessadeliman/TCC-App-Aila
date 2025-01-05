@@ -1,12 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class Celulas {
-  String path;
+  int id;
   late Caixa caixa;
   double confianca;
   int indice;
   String nome;
 
   Celulas({
-    this.path = '',
+    this.id = 0,
     Caixa? caixa,
     this.confianca = 0,
     this.indice = 0,
@@ -15,14 +18,29 @@ class Celulas {
     this.caixa = caixa ?? Caixa();
   }
 
-  factory Celulas.fromJson(Map<String, dynamic> json) {
+  factory Celulas.fromMap(Map<String, dynamic> json) {
     return Celulas(
-      caixa: Caixa.fromJson(json['caixa']),
+      caixa: json['caixa'] != null ? Caixa.fromMap(json['caixa']) : Caixa(),
       confianca: json['confianca'] ?? 0,
       indice: json['indice'] ?? 0,
+      id: json['id'] ?? 0,
       nome: json['nome'] ?? '',
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'caixa': caixa.toMap(),
+      'confianca': confianca,
+      'indice': indice,
+      'nome': nome,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Celulas.fromJson(String source) =>
+      Celulas.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class Caixa {
@@ -38,7 +56,7 @@ class Caixa {
     this.y2 = 0,
   });
 
-  factory Caixa.fromJson(Map<String, dynamic> json) {
+  factory Caixa.fromMap(Map<String, dynamic> json) {
     return Caixa(
       x1: json['x1'] ?? 0,
       x2: json['x2'] ?? 0,
@@ -46,4 +64,18 @@ class Caixa {
       y2: json['y2'] ?? 0,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'x1': x1,
+      'x2': x2,
+      'y1': y1,
+      'y2': y2,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Caixa.fromJson(String source) =>
+      Caixa.fromMap(json.decode(source) as Map<String, dynamic>);
 }

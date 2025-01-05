@@ -2,7 +2,7 @@ import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/db/modelos/sessao.dart';
 import 'package:aila/telas/apresentacao.dart';
-import 'package:aila/telas/telas_internas/bloc/analises_bloc.dart';
+import 'package:aila/telas/telas_internas/analise/bloc/analises_bloc.dart';
 import 'package:aila/telas/telas_internas/home.dart';
 import 'package:aila/telas/inicializacao/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final List<Map<String, dynamic>> resultados =
-      await DatabaseConexao().getAnalises();
 
-  final List<Analise> analises =
-      List.from(resultados.map((element) => Analise.fromMap(element)));
+  final List<Analise> analises = await DatabaseConexao().getBanco();
 
   SharedPreferences cache = await SharedPreferences.getInstance();
   final sessaoCache = cache.getString('sessaoAtiva');
