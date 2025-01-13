@@ -33,7 +33,7 @@ class AnalisesBloc extends Bloc<AnalisesEvents, AnalisesState> {
       for (var coleta in event.analise.coletas) {
         try {
           // Criação do multipart request
-          final url = Uri.parse('http://192.168.1.9:3000/analise');
+          final url = Uri.parse('${sessaoAtiva.path}analise');
 
           var request = http.MultipartRequest('POST', url)
             ..headers.addAll(headers)
@@ -48,12 +48,10 @@ class AnalisesBloc extends Bloc<AnalisesEvents, AnalisesState> {
 
           if (response.statusCode == 200) {
             // Decodificar o JSON
-            final data = jsonDecode(response.body);
-
-            final List<dynamic> lista = data["detecoes"];
+           final List<dynamic> data = jsonDecode(response.body);
 
             // Converter os dados para a classe modelo
-            final List<Celulas> celulas = lista.map((item) {
+            final List<Celulas> celulas = data.map((item) {
               return Celulas.fromMap(item);
             }).toList();
 

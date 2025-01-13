@@ -1,6 +1,7 @@
 import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/apresentacao.dart';
 import 'package:aila/telas/componentes/toggle.dart';
+import 'package:aila/telas/inicializacao/tela_conexao.dart';
 import 'package:aila/telas/telas_internas/home.dart';
 import 'package:aila/telas/inicializacao/bloc/login_bloc.dart';
 import 'package:aila/telas/inicializacao/bloc/state_events_login.dart';
@@ -44,6 +45,28 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 60,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return TelaConexao(Login(widget.analises));
+                }));
+              },
+              icon: Column(
+                children: [
+                  const Icon(
+                    Icons.network_check,
+                    applyTextScaling: true,
+                  ),
+                  Text(
+                    'Conexão',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  )
+                ],
+              ))
+        ],
         leading: IconButton(
             onPressed: () {
               Navigator.pushReplacement(context,

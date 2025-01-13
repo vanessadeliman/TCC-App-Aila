@@ -9,6 +9,8 @@ class Sessao {
   String senha;
   String email;
   bool lembrar;
+  String ip;
+  String porta;
   Sessao({
     this.token = '',
     this.cargo = '',
@@ -16,12 +18,18 @@ class Sessao {
     this.nome = '',
     this.senha = '',
     this.email = '',
+    this.ip = '',
+    this.porta = '',
     this.lembrar = false,
   });
+
+  String get path => "http://$ip:$porta/";
 
   Sessao copyWith(
       {String? token,
       String? cargo,
+      String? ip,
+      String? porta,
       String? instituicao,
       String? nome,
       String? email}) {
@@ -30,6 +38,7 @@ class Sessao {
         cargo: cargo ?? this.cargo,
         instituicao: instituicao ?? this.instituicao,
         nome: nome ?? this.nome,
+        ip: ip ?? this.ip,
         email: email ?? this.email);
   }
 
@@ -37,6 +46,8 @@ class Sessao {
     return <String, dynamic>{
       'AcessToken': token,
       'cargo': cargo,
+      'ip': ip,
+      'porta': porta,
       'email': email,
       'instituicao': instituicao,
       'nome': nome,
@@ -50,13 +61,17 @@ class Sessao {
       'cargo': cargo,
       'instituicao': instituicao,
       'email': email,
-      'nome': nome
+      'nome': nome,
+      'ip': ip,
+      'porta': porta
     };
   }
 
   factory Sessao.fromMap(Map<String, dynamic> map) {
     return Sessao(
         token: map['AcessToken'] ?? '',
+        ip: map['ip'] ?? '',
+        porta: map['porta'] ?? '',
         cargo: map['cargo'] ?? '',
         instituicao: map['instituicao'] ?? '',
         nome: map['nome'] ?? '',

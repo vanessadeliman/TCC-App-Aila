@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 abstract class LoginState {}
 
 class InitState extends LoginState {}
@@ -12,6 +14,14 @@ class ErroState extends LoginState {
 }
 
 abstract class LoginEvents {}
+
+class AtualizaConexao extends LoginEvents {
+  final BuildContext context;
+  final String ip;
+  final String porta;
+  final Function callback;
+  AtualizaConexao(this.context, this.ip, this.porta, this.callback);
+}
 
 class LogarEvent extends LoginEvents {
   final String email;

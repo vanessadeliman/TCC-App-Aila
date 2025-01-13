@@ -71,7 +71,8 @@ class _HomeState extends State<Home> {
               return CardAnalise(analises[index], refresh);
             },
           )),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Adiciona'),
         onPressed: () {
           Navigator.push(
             context,
@@ -80,13 +81,13 @@ class _HomeState extends State<Home> {
             ),
           );
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
       ),
     );
   }
 
   Future<void> refresh() async {
-    analises =  await DatabaseConexao().getBanco();
+    analises = await DatabaseConexao().getBanco();
     setState(() {});
   }
 }

@@ -48,6 +48,11 @@ class _NovaAnaliseState extends State<NovaAnalise> {
                     InformacoesDaAnalise(analise, widget.atualiza),
               ));
         }
+        if (state is ErroState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.erro)),
+          );
+        }
       },
       builder: (context, state) => Scaffold(
         appBar: AppBar(

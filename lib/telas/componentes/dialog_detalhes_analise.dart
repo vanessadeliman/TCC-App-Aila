@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class DialogDetalhesAnalise extends StatelessWidget {
   final String titulo;
   final Coleta coleta;
-  const DialogDetalhesAnalise(this.titulo,this.coleta, {super.key});
+  const DialogDetalhesAnalise(this.titulo, this.coleta, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,51 +27,48 @@ class DialogDetalhesAnalise extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      content: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Na imagem foram identificadas ${corados + naoCorados} células:',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                const Icon(
-                  Icons.cancel_outlined,
-                  color: Colors.red,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  '$corados Corados',
-                  style: const TextStyle(fontSize: 16, color: Colors.red),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.green,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  '$naoCorados Não Corados',
-                  style: const TextStyle(fontSize: 16, color: Colors.green),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Divider(
-              color: Colors.grey[300],
-              thickness: 1,
-            ),
-            const SizedBox(height: 12),
-            TabelaCelulas(coleta.celula),
-          ],
-        ),
+      content: ListView(
+        children: [
+          Text(
+            'Na imagem foram identificadas ${corados + naoCorados} células:',
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              const Icon(
+                Icons.cancel_outlined,
+                color: Colors.red,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                '$corados Corados',
+                style: const TextStyle(fontSize: 16, color: Colors.red),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              const Icon(
+                Icons.check_circle_outline,
+                color: Colors.green,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                '$naoCorados Não Corados',
+                style: const TextStyle(fontSize: 16, color: Colors.green),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Divider(
+            color: Colors.grey[300],
+            thickness: 1,
+          ),
+          const SizedBox(height: 12),
+          TabelaCelulas(coleta.celula),
+        ],
       ),
       actions: [
         TextButton(

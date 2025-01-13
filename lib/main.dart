@@ -21,11 +21,13 @@ void main() async {
   if (sessaoCache != null && sessaoCache.isNotEmpty) {
     sessaoAtiva = Sessao.fromJson(sessaoCache);
 
-    DateTime? expirationDate = Jwt.getExpiryDate(sessaoAtiva.token);
+    if (sessaoAtiva.token.isNotEmpty) {
+      DateTime? expirationDate = Jwt.getExpiryDate(sessaoAtiva.token);
 
-    if (expirationDate != null) {
-      if (!DateTime.now().isBefore(expirationDate)) {
-        sessaoAtiva.token = '';
+      if (expirationDate != null) {
+        if (!DateTime.now().isBefore(expirationDate)) {
+          sessaoAtiva.token = '';
+        }
       }
     }
   }
@@ -46,6 +48,7 @@ class InicializaApp extends StatelessWidget {
         BlocProvider(create: (context) => AnalisesBloc(sessao))
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

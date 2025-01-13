@@ -8,6 +8,8 @@ class TabelaCelulas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DataTable(
+        horizontalMargin: 0,
+        columnSpacing: 0,
         columns: const [
           DataColumn(label: Text('id')),
           DataColumn(label: Text('Tipo')),
@@ -22,5 +24,4 @@ class TabelaCelulas extends StatelessWidget {
           ]);
         }));
   }
-
 }

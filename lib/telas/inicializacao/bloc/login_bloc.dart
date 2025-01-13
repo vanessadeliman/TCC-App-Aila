@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:aila/db/modelos/sessao.dart';
 import 'package:aila/services/interceptor.dart';
 import 'package:aila/telas/inicializacao/bloc/state_events_login.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http_interceptor/http/intercepted_client.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginBloc extends Bloc<LoginEvents, LoginState> {
@@ -18,6 +19,23 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
   LoginBloc(this.sessaoAtiva) : super(InitState()) {
     on<LogarEvent>(_login);
     on<CadastrarEvent>(_cadastro);
+    on<AtualizaConexao>((event, emit) async {
+      try {
+        await cliente
+            .get(Uri.parse('http://${event.ip}:${event.porta}/teste'));
+        sessaoAtiva.ip = event.ip;
+        sessaoAtiva.porta = event.porta;
+        event.callback();
+      } catch (e) {
+        if (e is ClientException) {
+          ScaffoldMessenger.of(event.context).showSnackBar(
+              const SnackBar(content: Text('Dados de conexão inválidos.')));
+        } else {
+          ScaffoldMessenger.of(event.context)
+              .showSnackBar(const SnackBar(content: Text('Ocorreu um erro')));
+        }
+      }
+    });
   }
 
   FutureOr<void> _login(LogarEvent event, emit) async {
@@ -31,7 +49,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       };
 
       final response = await cliente.get(
-        Uri.parse('http://192.168.1.9:3000/login'),
+        Uri.parse('${sessaoAtiva.path}login'),
         headers: headers,
       );
 
@@ -68,7 +86,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       sessaoAtiva.email = event.email;
 
       final response = await cliente.post(
-          Uri.parse('https://tcc-servidor-aila.onrender.com/cadastro'),
+          Uri.parse('${sessaoAtiva.path}cadastro'),
           headers: headers,
           body: jsonEncode(sessaoAtiva.toMapNovoCadastro()));
 
