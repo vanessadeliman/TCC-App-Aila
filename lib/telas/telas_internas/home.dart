@@ -3,6 +3,8 @@ import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/componentes/card_analise.dart';
 import 'package:aila/telas/inicializacao/bloc/login_bloc.dart';
+import 'package:aila/telas/inicializacao/login.dart';
+import 'package:aila/telas/inicializacao/tela_conexao.dart';
 import 'package:aila/telas/telas_internas/analise/nova_analise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +31,27 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Histórico de análises'),
+        title: const Text('Histórico'),
         actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return TelaConexao(Login(widget.analises));
+                }));
+              },
+              icon: Column(
+                children: [
+                  const Icon(
+                    Icons.network_check,
+                    applyTextScaling: true,
+                  ),
+                  Text(
+                    'Conexão',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  )
+                ],
+              )),
           IconButton(
               onPressed: () async {
                 DateTime? data = await showDatePicker(
@@ -45,7 +66,18 @@ class _HomeState extends State<Home> {
                   setState(() {});
                 }
               },
-              icon: const Icon(Icons.calendar_month)),
+              icon: Column(
+                children: [
+                  const Icon(
+                    Icons.calendar_month,
+                    applyTextScaling: true,
+                  ),
+                  Text(
+                    'Filtrar',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  )
+                ],
+              )),
           IconButton(
               onPressed: () async {
                 context.read<LoginBloc>().sessaoAtiva.token = '';
@@ -54,7 +86,18 @@ class _HomeState extends State<Home> {
                     context.read<LoginBloc>().sessaoAtiva.toJson());
                 exit(0);
               },
-              icon: const Icon(Icons.logout))
+              icon: Column(
+                children: [
+                  const Icon(
+                    Icons.logout,
+                    applyTextScaling: true,
+                  ),
+                  Text(
+                    'Sair',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  )
+                ],
+              ))
         ],
       ),
       body: RefreshIndicator(
