@@ -1,16 +1,39 @@
-# aila
+# 🚀 TCC-App-Aila
 
-A new Flutter project.
+Repositório do aplicativo para contagem de células espermáticas, desenvolvido para o TCC do curso de Sistemas de Informação no IFCE.
 
-## Getting Started
+![Estrelas](https://img.shields.io/github/stars/vanessadeliman/TCC-App-Aila.svg)
+![Forks](https://img.shields.io/github/forks/vanessadeliman/TCC-App-Aila.svg)
 
-This project is a starting point for a Flutter application.
+## 📋 Tabela de Conteúdos
 
-A few resources to get you started if this is your first Flutter project:
+- [📖 Visão Geral](#-visão-geral)
+- [💻 Tecnologias](#-tecnologias)
+- [🚀 Instalação](#-instalação)
+- [📝 Como Usar](#-como-usar)
+- [✨ Funcionalidades](#-funcionalidades)
+- [📄 Licença](#-licença)
+- [👨‍💻 Autor](#-autor)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📖 Visão Geral
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Este repositório contém o código-fonte para TCC-App-Aila. 
+
+
+## 💻 Tecnologias
+
+- **Dart**
+- **Flutter**
+
+## ✨ Funcionalidades
+
+- ✅ Cadastro e login de usuário
+- ✅ Contagem de células através de visão computacional
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença não especificada.
+
+## 👨‍💻 Autora
+
+- [vanessadeliman](https://github.com/vanessadeliman)
