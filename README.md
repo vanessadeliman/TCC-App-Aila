@@ -9,8 +9,6 @@ Repositório do aplicativo para contagem de células espermáticas, desenvolvido
 
 - [📖 Visão Geral](#-visão-geral)
 - [💻 Tecnologias](#-tecnologias)
-- [🚀 Instalação](#-instalação)
-- [📝 Como Usar](#-como-usar)
 - [✨ Funcionalidades](#-funcionalidades)
 - [📄 Licença](#-licença)
 - [👨‍💻 Autor](#-autor)
