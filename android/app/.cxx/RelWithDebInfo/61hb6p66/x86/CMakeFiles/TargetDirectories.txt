@@ -1,0 +1,2 @@
+C:/Users/vanes/Desktop/TCC-App-Aila/android/app/.cxx/RelWithDebInfo/61hb6p66/x86/CMakeFiles/edit_cache.dir
+C:/Users/vanes/Desktop/TCC-App-Aila/android/app/.cxx/RelWithDebInfo/61hb6p66/x86/CMakeFiles/rebuild_cache.dir
