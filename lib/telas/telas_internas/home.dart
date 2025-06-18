@@ -3,7 +3,6 @@ import 'package:aila/db/conexao_db.dart';
 import 'package:aila/db/modelos/analise.dart';
 import 'package:aila/telas/componentes/card_analise.dart';
 import 'package:aila/telas/inicializacao/bloc/login_bloc.dart';
-import 'package:aila/telas/inicializacao/login.dart';
 import 'package:aila/telas/inicializacao/tela_conexao.dart';
 import 'package:aila/telas/telas_internas/analise/nova_analise.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,7 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
-                  return TelaConexao(Login(widget.analises));
+                  return TelaConexao(Home(widget.analises));
                 }));
               },
               icon: Column(
